@@ -18,6 +18,7 @@ const getHotList = async () => {
       <ul class="goods-list">
         <li v-for="item in hotList" :key="item.id">
           <RouterLink to="/">
+            <!-- v-img-lazy="item.picture" 图片配合指令 懒加载的操作 -->
             <img v-img-lazy="item.picture" alt="">
             <p class="name">{{ item.title }}</p>
             <p class="desc">{{ item.alt }}</p>
