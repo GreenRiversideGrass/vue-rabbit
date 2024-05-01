@@ -12,7 +12,6 @@ export const lazyPlugin = {
                     el,
                     // isIntersecting 是否在可视区域内
                     ([{ isIntersecting }]) => {
-                      console.log(isIntersecting)
                       if(isIntersecting){
                         // 加载图片
                         el.src = binding.value
