@@ -16,3 +16,10 @@ export const getNewGoodsAPI = () => http.get('/home/new')
  * @return {*}
  */
 export const getHotGoodsAPI = () => http.get('/home/hot')
+
+/**
+ * @description: 获取所有商品模块
+ * @param {*}
+ * @return {*}
+ */
+export const getGoodsAPI = () => http.get('/home/goods')
