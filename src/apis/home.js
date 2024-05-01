@@ -9,3 +9,10 @@ export const getBannerAPI = () => http.get('/home/banner')
  * @return {*}
  */
 export const getNewGoodsAPI = () => http.get('/home/new')
+
+/**
+ * @description: 获取人气推荐
+ * @param {*}
+ * @return {*}
+ */
+export const getHotGoodsAPI = () => http.get('/home/hot')

@@ -1,19 +1,17 @@
 <script setup>
 import HomePanel from './HomePanel.vue'
 import { getNewGoodsAPI } from '@/apis/home'
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 // 获取新鲜好物数据
 const newList = ref([])
 
 const getNewList = async () => {
   const res = await getNewGoodsAPI()
   newList.value = res.result
-  console.log(newList.value)
 }
 
-onMounted(() => {
-  getNewList()
-})
+getNewList()
+
 </script>
 
 <template>
