@@ -45,10 +45,10 @@ defineProps({
         color: #999;
         height: 29px;
       }
-
       .price {
         color: $priceColor;
         font-size: 20px;
       }
+
     }
 </style>
