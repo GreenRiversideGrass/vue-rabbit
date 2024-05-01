@@ -15,7 +15,7 @@ const categoryStore = useCategoryStore()
       <!-- 导航区域 -->
       <ul class="app-header-nav ">
         <li class="home" v-for="item in categoryStore.categoryLsit" :key="item.id">
-          <RouterLink to="/">{{item.name}}</RouterLink>
+          <RouterLink :to="`/cacategory/${item.id}`">{{item.name}}</RouterLink>
         </li>
       </ul>
 
