@@ -7,7 +7,7 @@ import { useCategory } from './composables/useCategory'
 const { categoryData } = useCategory()
 // 轮播图banner
 const { bannerList } = useBanner()
-
+console.log(categoryData);
 </script>
 
 <template>
@@ -32,7 +32,7 @@ const { bannerList } = useBanner()
         <h3>全部分类</h3>
         <ul>
           <li v-for="i in categoryData.children" :key="i.id">
-            <RouterLink to="/">
+            <RouterLink :to="`/category/sub/${i.id}`">
               <img :src="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
