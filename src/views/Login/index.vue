@@ -7,7 +7,8 @@ import { ref } from 'vue'
 // 1.准备表单对象
 const form = ref({
   account: '',
-  password: ''
+  password: '',
+  agree: true
 })
 // 2.表单验证规则
 const rules = ref({
@@ -23,6 +24,17 @@ const rules = ref({
     {
       pattern: /^\S{5,14}$/,
       message: '密码必须是 6-14位 非空字符',
+    }
+  ],
+  agree:[
+    {   
+      validator: (rule, value, callback) => {
+        if (!value) {
+          callback(new Error('请勾选隐私条款和服务条款'))
+        } else {
+          callback()
+        }
+      }
     }
   ]
 })
@@ -59,8 +71,8 @@ const rules = ref({
               <el-form-item prop="password" label="密码">
                 <el-input v-model="form.password"/>
               </el-form-item>
-              <el-form-item label-width="22px">
-                <el-checkbox  size="large">
+              <el-form-item label-width="22px" prop="agree">
+                <el-checkbox  size="large" v-model="form.agree">
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
