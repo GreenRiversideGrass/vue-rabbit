@@ -57,6 +57,10 @@ export const userCartStore = defineStore('cart',() => {
 
     }
 
+    // 清除本地购物车
+    const clearCart = () => {
+        cartList.value = []
+    }
 
 
     // 单选功能
@@ -98,7 +102,8 @@ export const userCartStore = defineStore('cart',() => {
         isALL,
         allCheck,
         selectedCount,
-        selectedPrice
+        selectedPrice,
+        clearCart
     }
 },{
     persist:true

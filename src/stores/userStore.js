@@ -2,8 +2,10 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { LoginPAI } from '@/apis/user'
+import { userCartStore } from './cartStore'
 
 export const useUserStore = defineStore('user', () => {
+    const cartStore = userCartStore()
     // 定义一个ref类型的变量userInfo，用于存储用户信息
     const userInfo = ref({})
     // 定义一个函数getUserInfo，用于获取用户信息
@@ -15,6 +17,8 @@ export const useUserStore = defineStore('user', () => {
     // 退出时清除用户信息
     const clearUserInfo = () => {
         userInfo.value = {}
+        // 执行清除购物车的action
+        cartStore.clearCart()
     }
 
     //  返回userInfo和getUserInfo
