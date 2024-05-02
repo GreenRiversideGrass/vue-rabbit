@@ -1,5 +1,32 @@
 <script setup>
 
+// 表单验证 （账户+密码）
+
+import { ref } from 'vue'
+
+// 1.准备表单对象
+const form = ref({
+  account: '',
+  password: ''
+})
+// 2.表单验证规则
+const rules = ref({
+  account: [
+    { required: true, message: '用户名不能为空', trigger: 'blur' },
+    {
+      pattern: /^\S{5,15}$/,
+      message: '用户名必须是 5-15位 非空字符',
+    }
+  ],
+  password: [
+    { required: true, message: '密码不能为空', trigger: 'blur' },
+    {
+      pattern: /^\S{5,14}$/,
+      message: '密码必须是 6-14位 非空字符',
+    }
+  ]
+})
+
 </script>
 
 
@@ -24,13 +51,13 @@
         </nav>
         <div class="account-box">
           <div class="form">
-            <el-form label-position="right" label-width="60px"
+            <el-form :model="form" :rules="rules" label-position="right" label-width="60px"
               status-icon>
-              <el-form-item  label="账户">
-                <el-input/>
+              <el-form-item prop="account"  label="账户">
+                <el-input v-model="form.account"/>
               </el-form-item>
-              <el-form-item label="密码">
-                <el-input/>
+              <el-form-item prop="password" label="密码">
+                <el-input v-model="form.password"/>
               </el-form-item>
               <el-form-item label-width="22px">
                 <el-checkbox  size="large">
