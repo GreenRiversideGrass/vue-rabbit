@@ -10,5 +10,10 @@ module.exports = {
   },
   rules:{
     'vue/multi-word-component-names': 0, //不再强制要求组件命名
+  },
+  globals: {
+    ElMessage: 'readonly',
+    ElMessageBox: 'readonly',
+    ElLoading: 'readonly'
   }
 }
