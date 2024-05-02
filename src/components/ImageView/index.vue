@@ -83,7 +83,7 @@ watch([elementX, elementY],() => {
 .goods-image {
   width: 480px;
   height: 400px;
-  position: relative;
+  position: relative; 
   display: flex;
 
   .middle {
