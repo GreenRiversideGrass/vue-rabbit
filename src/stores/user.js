@@ -11,8 +11,14 @@ export const useUserStore = defineStore('user', () => {
         const res = await LoginPAI({ account, password })
         userInfo.value = res.result
     }
+
+    // 退出时清除用户信息
+    const clearUserInfo = () => {
+        userInfo.value = {}
+    }
+
     //  返回userInfo和getUserInfo
-    return { userInfo, getUserInfo }
+    return { userInfo, getUserInfo ,clearUserInfo}
   },{
     // 定义一个插件，用于持久化存储用户信息
     persist: true
