@@ -1,4 +1,5 @@
 <script setup>
+import DetailHot from './components/DetailHot.vue'
 import {getDetail} from '@/apis/detail'
 import {useRoute} from 'vue-router'
 import {ref, onMounted} from 'vue'
@@ -8,7 +9,6 @@ const route = useRoute()
 
 const getDetailData = async () => {
   const res = await getDetail(route.params.id)
-  console.log(res.result);
   goods.value = res.result
 }
 onMounted(() => {
@@ -60,7 +60,7 @@ onMounted(() => {
                 </li>
                 <li>
                   <p>品牌信息</p>
-                  <p>{{ goods.brand.name }}+</p>
+                  <p>{{ goods.brand?.name }}+</p>
                   <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
                 </li>
               </ul>
@@ -108,7 +108,7 @@ onMounted(() => {
                 <nav>
                   <a>商品详情</a>
                 </nav>
-                <div class="goods-detail">
+                <div class="goods-detail" v-if="goods.details">
                   <!-- 属性 -->
                   <ul class="attrs">
                     <li v-for="item in goods.details.properties" :key="item.value">
@@ -123,7 +123,10 @@ onMounted(() => {
             </div>
             <!-- 24热榜+专题推荐 -->
             <div class="goods-aside">
-
+              <!-- 24小时 -->
+              <DetailHot></DetailHot>
+              <!-- 周 -->
+              <DetailHot></DetailHot>
             </div>
           </div>
         </div>
