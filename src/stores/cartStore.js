@@ -31,6 +31,13 @@ export const userCartStore = defineStore('cart',() => {
        cartList.value.splice(Index, 1)
     }
 
+    // 单选功能
+    const singleSelect = (skuId, selected) => {
+        // 通过skuIdZH找到对应的商品对象 - 修改selected属性
+        const item = cartList.value.find((item) => item.skuId === skuId )
+        item.selected = selected
+    }
+
     // 计算属性
     // 1.总数量  所有项的count之和
     const allCount = computed(()=> cartList.value.reduce((sum,item) => sum+item.count ,0))
@@ -38,7 +45,14 @@ export const userCartStore = defineStore('cart',() => {
     const allPrice = computed(()=> cartList.value.reduce((sum,item) => sum+item.count * item.price ,0))
 
     // return cartList - addCart
-    return { cartList, addCart,delCart,allCount,allPrice}
+    return { 
+        cartList, 
+        addCart,
+        delCart,
+        allCount,
+        allPrice,
+        singleSelect
+    }
 },{
     persist:true
 })
