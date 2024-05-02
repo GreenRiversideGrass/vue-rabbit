@@ -2,6 +2,8 @@
 import axios from "axios"
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/user'
+import router from "@/router"
+
 
 const http = axios.create({
     baseURL:'http://pcapi-xiaotuxian-front-devtest.itheima.net',
@@ -25,6 +27,14 @@ http.interceptors.request.use(config => {
 http.interceptors.response.use(res => res.data, e => {
   // 统一错误处理
   ElMessage.error(e.response.data.message)
+  // 401token失效处理
+  // 1.清除本地用户数据
+  // 2.跳转到登录页
+  const userStore = useUserStore()
+  if(e.response.status === 401){
+    userStore.clearUserInfo()
+    router.push('/login')
+  }
     return Promise.reject(e)
   })
 
