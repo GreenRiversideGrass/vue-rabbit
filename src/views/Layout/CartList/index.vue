@@ -4,11 +4,14 @@ const cartStore = userCartStore()
 
 // 单选
 const singleCheck = (i,selected) => {
-  console.log(i,selected)
   // store cartList 数组 无法知道要修改谁的选中状态
   // 除了 selected 之外，还需要传递一个 skuId 用来筛选
   cartStore.singleSelect(i.skuId,selected)
+}
 
+// 全选
+const allCheck = (selected) => {
+  cartStore.allCheck(selected)
 }
 </script>
 
@@ -20,7 +23,7 @@ const singleCheck = (i,selected) => {
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox/>
+                <el-checkbox :model-value="cartStore.isALL" @change="allCheck"/>
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>

@@ -38,20 +38,31 @@ export const userCartStore = defineStore('cart',() => {
         item.selected = selected
     }
 
+    // 全选功能
+    const allCheck = (selected) => {
+        cartList.value.forEach((item) => item.selected = selected)
+    }
+
     // 计算属性
     // 1.总数量  所有项的count之和
+    // reduce - 累加器
     const allCount = computed(()=> cartList.value.reduce((sum,item) => sum+item.count ,0))
     // 2.总价 所有项的count * price
     const allPrice = computed(()=> cartList.value.reduce((sum,item) => sum+item.count * item.price ,0))
 
-    // return cartList - addCart
+    // 是否全选
+    const isALL = computed(() => cartList.value.every((item) => item.selected))
+
+    // return cartList - addCart ...
     return { 
         cartList, 
         addCart,
         delCart,
         allCount,
         allPrice,
-        singleSelect
+        singleSelect,
+        isALL,
+        allCheck
     }
 },{
     persist:true
