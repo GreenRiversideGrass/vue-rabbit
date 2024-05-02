@@ -13,4 +13,7 @@ export const useUserStore = defineStore('user', () => {
     }
     //  返回userInfo和getUserInfo
     return { userInfo, getUserInfo }
+  },{
+    // 定义一个插件，用于持久化存储用户信息
+    persist: true
   })
