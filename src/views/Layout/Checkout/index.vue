@@ -1,7 +1,11 @@
 <script setup>
-import { getCheckInfoAPI } from '@/apis/checkout'
+import { getCheckInfoAPI ,createOrderAPI } from '@/apis/checkout'
 import {ref, onMounted} from 'vue'
+import { useRouter } from 'vue-router'
+import { userCartStore } from '@/stores/cartStore'
 
+const cartStore = userCartStore()
+const router = useRouter()
 const curAddress = ref({})  // 默认地址
 const checkInfo = ref({})  // 订单对象
 const getCheckInfo = async () => {
@@ -15,8 +19,6 @@ const getCheckInfo = async () => {
 
 onMounted(() => getCheckInfo())
 
-// const curAddress = {}  // 地址对象
-
 const toggleFlag = ref(false)  // 切换地址弹窗
 
 const activeAddress = ref({})  // 选中的地址
@@ -27,6 +29,32 @@ const confirm = () => {
   curAddress.value = activeAddress.value
   toggleFlag.value = false
   activeAddress.value = {}
+}
+
+// 创建订单
+const createOrder = async () => {
+  const res = await createOrderAPI({
+    deliveryTimeType: 1,
+    payType: 1,
+    payChannel: 1,
+    buyerMessage: '',
+    goods:checkInfo.value.goods.map(item => {
+      return {
+        skuId: item.skuId,
+        count: item.count
+      }
+    }),
+    addressId: curAddress.value.id
+  })
+    // 跳转到支付页面
+    router.push({
+      path: '/pay',
+      query: {
+        id: res.result.id
+      }
+    })
+    // 更新购物车
+    cartStore.updateNewList()
 }
 
 </script>
@@ -123,7 +151,7 @@ const confirm = () => {
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large" >提交订单</el-button>
+          <el-button type="primary" size="large" @click="createOrder" >提交订单</el-button>
         </div>
       </div>
     </div>
@@ -132,7 +160,7 @@ const confirm = () => {
   <el-dialog v-model="toggleFlag" title="切换收货地址" width="30%" center>
     <div class="addressWrapper">
       <div class="text item" :class="{active: activeAddress.id === item.id}" @click="switchAddress(item)" v-for="item in checkInfo.userAddresses"  :key="item.id">
-        <ul>
+        <ul>""
         <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
         <li><span>联系方式：</span>{{ item.contact }}</li>
         <li><span>收货地址：</span>{{ item.fullLocation + item.address }}</li>
