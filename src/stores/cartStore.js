@@ -103,7 +103,8 @@ export const userCartStore = defineStore('cart',() => {
         allCheck,
         selectedCount,
         selectedPrice,
-        clearCart
+        clearCart,
+        updateNewList
     }
 },{
     persist:true

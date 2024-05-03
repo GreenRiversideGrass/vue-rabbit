@@ -9,3 +9,6 @@ export const findNewCartListAPI = () => http.get('/member/cart')
 
 // 删除购物车
 export const deleteCartAPI = (ids) => http.delete('/member/cart',{data:{ids}})
+
+// 合并购物车
+export const mergeCartAPI = (data) => http.post('/member/cart/merge',data)
