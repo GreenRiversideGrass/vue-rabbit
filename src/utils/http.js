@@ -26,7 +26,7 @@ http.interceptors.request.use(config => {
 // axios响应式拦截器
 http.interceptors.response.use(res => res.data, e => {
   // 统一错误处理
-  ElMessage.error(e.response.data.message)
+  ElMessage.error(e.response.data.msg)
   // 401token失效处理
   // 1.清除本地用户数据
   // 2.跳转到登录页
