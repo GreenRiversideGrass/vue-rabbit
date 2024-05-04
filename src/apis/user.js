@@ -6,3 +6,5 @@ export const LoginPAI = ({account,password}) => http.post('/login',{
     account,
     password
 })
+
+export const getLikeListAPI = ({ limit = 4 }) => http.get('/goods/relevant',{params:{limit}})
