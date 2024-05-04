@@ -38,7 +38,7 @@ const tabChange = (type) => {
 
 <template>
   <div class="order-container">
-    <el-tabs @tab-change="tabChange">
+    <el-tabs  @tab-change="tabChange">
       <!-- tab切换 -->
       <el-tab-pane  v-for="item in tabTypes" :key="item.name" :label="item.label" />
 
