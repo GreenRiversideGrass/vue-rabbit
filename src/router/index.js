@@ -59,8 +59,8 @@ const router = createRouter({
           component:Member,
           children:[
             {
-              path:'user',
-              component:UserInfo
+              path:'',
+              component:UserInfo,
             },
             {
               path:'order',
