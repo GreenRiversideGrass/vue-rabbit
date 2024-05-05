@@ -60,7 +60,7 @@ const router = createRouter({
           children:[
             {
               path:'',
-              component:UserInfo,
+              component:UserInfo
             },
             {
               path:'order',

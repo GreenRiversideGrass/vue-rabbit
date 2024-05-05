@@ -1,20 +1,17 @@
 <script setup>
 import { useUserStore } from "@/stores/userStore"
-import { getLikeListAPI } from "@/apis/user"
-import { ref ,onMounted} from "vue"
-import GoodsItem from "@/views/Layout/Home/componets/Goodsitem.vue"
+import InfoEdit from './InfoEdit/index.vue'
+import { ref } from "vue"
+
 
 const userStore = useUserStore()
 
-const likeList = ref([])
-const getLikeList = async () => {
-  const res = await getLikeListAPI({limit: 4})
-  likeList.value = res.result
-}
 
-onMounted(() => {
-  getLikeList()
-})
+// 点击地址管理调用子组件的方法
+const onDis = ref()
+const onAd = () => {
+  onDis.value.onAddress()
+}
 
 </script>
 
@@ -36,22 +33,16 @@ onMounted(() => {
         <span class="iconfont icon-aq"></span>
         <p>安全设置</p>
       </a>
-      <a href="javascript:;">
-        <span class="iconfont icon-dw"></span>
+      <a href="javascript:;" @click="onAd">
+        <span  class="iconfont icon-dw"></span>
         <p>地址管理</p>
       </a>
     </div>
   </div>
   <div class="like-container">
-    <div class="home-panel">
-      <div class="header">
-        <h4 data-v-bcb266e0="">猜你喜欢</h4>
-      </div>
-      <div class="goods-list">
-        <GoodsItem v-for="good in likeList" :key="good.id" :good="good" />
-      </div>
-    </div>
+    <InfoEdit ref="onDis" ></InfoEdit>
   </div>
+
 </template>
 
 <style scoped lang="scss">
@@ -118,30 +109,6 @@ onMounted(() => {
   background-color: #fff;
 }
 
-.home-panel {
-  background-color: #fff;
-  padding: 0 20px;
-  margin-top: 20px;
-  height: 400px;
 
-  .header {
-    height: 66px;
-    border-bottom: 1px solid #f5f5f5;
-    padding: 18px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
 
-    h4 {
-      font-size: 22px;
-      font-weight: 400;
-    }
-
-  }
-
-  .goods-list {
-    display: flex;
-    justify-content: space-around;
-  }
-}
 </style>
