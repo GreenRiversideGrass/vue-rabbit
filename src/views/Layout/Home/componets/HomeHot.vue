@@ -2,7 +2,9 @@
 import HomePanel from './HomePanel.vue'
 import { getHotGoodsAPI } from '@/apis/home'
 import { ref } from 'vue'
+// 获取人气推荐数据
 const hotList = ref([])
+
 const getHotList = async () => {
   const res = await getHotGoodsAPI()
   hotList.value = res.result
