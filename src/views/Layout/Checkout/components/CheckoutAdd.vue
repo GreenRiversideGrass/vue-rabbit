@@ -1,17 +1,55 @@
 <script setup>
-import {addAddressAPI } from '@/apis/checkout'
+import {addAddressAPI ,editAddressAPI  } from '@/apis/checkout'
+import { useUserStore } from '@/stores/userStore';
+import router from "@/router"
 import { ref } from 'vue'
+
+const formRef = ref()   // 表单实例验证
+// const addAddressStore = useAddressStore()
+const userStore = useUserStore()
+
+defineProps({
+  title:{
+    type:String
+  }
+})
 
 const addFla = ref(false)    // 切换弹窗
 const addflag = ref()
-const open = () => {
+const open = async(row) => {
   addflag.value = addFla.value
+  addressForm.value = {...row}  // 添加 -> 重置了表单内容， 编辑 -> 存储了需要回显的数据
+  // console.log(addressForm.value);
+// 设置 cascaderValue 的值
+  selectedValues.value.value = [row.provinceCode, row.cityCode, row.countyCode]
+  if(row.fullLocation){
+    selectedValues.value.label = row.fullLocation.split('/')
+  }
+
 }
 
 
 
-// 添加地址
-const formRef = ref(null)   // 表单实例
+
+const selectedValues = ref([
+{
+    value: '',
+    label: '',
+    children: [
+      {
+        value:'',
+        label:'',
+        children:[
+          {
+            value:'',
+            label:''
+          }
+        ]
+      }
+    ]
+  }
+])
+
 const addressForm = ref({
   receiver: '',   //收货人-姓名
   contact: '',    //收货人-联系方式
@@ -22,8 +60,8 @@ const addressForm = ref({
   postalCode:'',  //邮政编码
   addressTags:'', //地址标签
   isDefault: 1,     //货地址是否默认  1-否 0-是
-  fullLocation:'', //完整地址
-  // location:'' //拼接地址
+  fullLocation: '', //完整地址
+  id: ''  //地址id
 })
 
 const rules = {
@@ -50,7 +88,6 @@ const rules = {
       trigger:'blur'
     }
   ],
-  location:[{required:true, message:'请选择所在地区',trigger:'change'}],
   postalCode:[
     {required:true, message:'请输入邮政编码',trigger:'blur'},
     {
@@ -99,11 +136,14 @@ const options = ref([
 const cascaderRef = ref()
 const handleLocationChange = (val) => {
   // 获取省市区编码
-  addressForm.value.provinceCode = val[0],
-  addressForm.value.cityCode = val[1],
-  addressForm.value.countyCode = val[2]
+  if(val.length === 3){
+    addressForm.value.provinceCode = val[0],
+    addressForm.value.cityCode = val[1],
+    addressForm.value.countyCode = val[2]
+  }
   // 拼接地址
-  // addressForm.value.location = cascaderRef.value.getCheckedNodes()[0].pathLabels.join('')
+    addressForm.value.fullLocation = cascaderRef.value.getCheckedNodes()[0].pathLabels.join('') 
+     
 }
 
 // 默认地址
@@ -116,43 +156,43 @@ const isEsit = () => {
   
 }
 
-// 添加地址操作
-const emit = defineEmits(['success'])
-const addAddress =  () => {
-  // 表单校验
-  formRef.value.validate(async valid => {
-    if (!valid) return
-    // 添加地址
-    await addAddressAPI({
-      receiver: addressForm.value.receiver,
-      contact: addressForm.value.contact,
-      provinceCode: addressForm.value.provinceCode,
-      cityCode: addressForm.value.cityCode,
-      countyCode: addressForm.value.countyCode,
-      address: addressForm.value.address,
-      postalCode: addressForm.value.postalCode,
-      isDefault: addressForm.value.isDefault,
-    })
-    
+// TODO-----------------------------------------------------------------
+// 添加和编辑地址未解决，存在请求问题？？？？？？
+
+const onSubmit = async () => {
+  const  token =  userStore.userInfo.token
+  formRef.value.validate()
+  const isEdit = addressForm.value.id
+  if(isEdit && token){
+    // 判断isEdit是否存在，存在则编辑地址
+    await editAddressAPI(addressForm.value.id, addressForm.value)
+    ElMessage.success('编辑成功')
+    // 关闭弹窗
     addflag.value = false
-    console.log(addFla.value);
+  }else{
+      // 添加地址
+    await addAddressAPI(addressForm.value)
     ElMessage.success('添加成功')
-    //通知父组件 重新获取地址列表 
-    emit('success')
-    // 清空表单
-    addressForm.value = ''
-  })
+        // 关闭弹窗
+    addflag.value = false
+  }
+
+  ElMessage.error('请登录后再添加地址')
+    // 跳转到登录页面
+    router.push('/login')
 }
 
 
 
 defineExpose({
-  open
+  open,
+  isEsit,
 })
 
 </script>
 <template>
-    <el-dialog class="addAddress " ref="addFla"  v-model="addflag"   title="添加收货地址" width="30%"  center>
+  {{ selectedValues.label }}
+    <el-dialog class="addAddress " ref="addFla" :title="addressForm.id  ? '编辑收货地址' : '添加收货地址'" v-model="addflag"   width="30%"  center>
     <el-form  ref="formRef" :model="addressForm" :rules="rules" label-position="right" style="max-width: 600px"   label-width="auto">
       <el-form-item  label="收  货  人" prop="receiver">
         <el-input v-model="addressForm.receiver"></el-input>
@@ -160,12 +200,14 @@ defineExpose({
       <el-form-item  label="联系方式" prop="contact">
         <el-input v-model="addressForm.contact"></el-input>
       </el-form-item>
-      <el-form-item label="所在地区" prop="location">
+      <el-form-item label="所在地区" >
         <el-cascader
           ref="cascaderRef"
           :options="options"
-          v-model="addressForm.location"
+          v-model="selectedValues"
+          :props="{ value: 'value', label: 'label', children: 'children' }"
           @change=" handleLocationChange"
+          :show-all-levels="true"
           placeholder="请选择所在地区">
         </el-cascader>
       </el-form-item>
@@ -174,6 +216,12 @@ defineExpose({
       </el-form-item>
       <el-form-item label="邮政编码" prop="postalCode">
         <el-input v-model="addressForm.postalCode"></el-input>
+      </el-form-item>
+      <!-- <el-form-item label="完整地址" >
+        <el-input v-model="addressForm.fullLocation"></el-input>
+      </el-form-item> -->
+      <el-form-item label="地址标签">
+        <el-input v-model="addressForm.addressTags"></el-input>
       </el-form-item>
       <el-form-item ref="isD" >
       <el-radio-group v-model="addressForm.isDefault">
@@ -184,7 +232,8 @@ defineExpose({
     <template #footer>
       <span class="dialog-footer">
         <el-button>取消</el-button>
-        <el-button type="primary" @click="addAddress">确定</el-button>
+
+        <el-button type="primary"  @click="onSubmit">确认</el-button>
       </span>
     </template>
   </el-dialog>

@@ -14,6 +14,7 @@ import PayBack from '@/views/Layout/Pay/PayBack.vue'
 import Member from '@/views/Layout/Member/index.vue'
 import UserInfo from '@/views/Layout/Member/components/UserInfo.vue'
 import UserOrder from '@/views/Layout/Member/components/UserOrder.vue'
+import UserAddress from '@/views/Layout/Member/components/UserAddress.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -65,6 +66,10 @@ const router = createRouter({
             {
               path:'order',
               component:UserOrder
+            },
+            {
+              path:'address',
+              component:UserAddress
             }
           ]
         }

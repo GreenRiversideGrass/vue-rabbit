@@ -10,7 +10,14 @@ export const createOrderAPI = (data) => http.post('/member/order', data)
 export const getAddressAPI = () => http.get('/member/address')
 
 // 添加地址
-export const addAddressAPI = (data) => http.post('/member/address', data)
+export const addAddressAPI = (address) => http.post('/member/address', address)
 
 // 删除地址
 export const delAddressAPI = (id) => http.delete(`/member/address/${id}`)
+
+// 修改地址
+export const editAddressAPI = (id,address) => http.put(`/member/addresses/${id}`,address)
+
+// 修改默认地址
+export const setDefaultAddressAPI = (address) => http.put(`/member/address/${address.id}`,
+ { isDefault: address.isDefault })

@@ -1,34 +1,27 @@
 <script setup>
 import { useCheckoutIndex } from './composables/CheckoutIndex.js'
-import {  createOrderAPI ,delAddressAPI} from '@/apis/checkout'
-import {ref, onMounted} from 'vue'
+import { createOrderAPI } from '@/apis/checkout'
+import {ref,onMounted} from 'vue'
 import { useRouter } from 'vue-router'
 import { userCartStore } from '@/stores/cartStore'
 import checkoutAdd from './components/CheckoutAdd.vue'
+
+onMounted(() => {
+  checkindex.getCheckInfo()
+})
 
 const checkindex = useCheckoutIndex()
 const cartStore = userCartStore()
 const router = useRouter()
 
 const checkInfo = checkindex.checkInfo
+const curAddress = checkindex.curAddress
+const toggleFlag = checkindex.toggleFlag // 切换地址弹窗
 
-const toggleFlag = ref(false)  // 切换地址弹窗
 // 地址渲染
-onMounted(() => checkindex.getCheckInfo())
 
 
 
-
-  // 删除地址
-const del = async () => {
-  // 1.调用删除地址接口
-  await delAddressAPI(checkindex.activeAddress.value.id)
-  // 2.重新获取地址列表
-  checkindex.getCheckInfo()
-  ElMessage.success('删除成功')
-  // 3.关闭弹窗
-  toggleFlag.value = false
-}
 
 // 创建订单
 const createOrder = async () => {
@@ -43,7 +36,7 @@ const createOrder = async () => {
         count: item.count
       }
     }),
-    addressId: checkindex.curAddress.value.id
+    addressId:curAddress.value.id
   })
     // 跳转到支付页面
     router.push({

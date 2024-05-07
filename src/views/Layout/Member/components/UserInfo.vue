@@ -1,17 +1,8 @@
 <script setup>
 import { useUserStore } from "@/stores/userStore"
 import InfoEdit from './InfoEdit/index.vue'
-import { ref } from "vue"
-
 
 const userStore = useUserStore()
-
-
-// 点击地址管理调用子组件的方法
-const onDis = ref()
-const onAd = () => {
-  onDis.value.onAddress()
-}
 
 </script>
 
@@ -33,14 +24,14 @@ const onAd = () => {
         <span class="iconfont icon-aq"></span>
         <p>安全设置</p>
       </a>
-      <a href="javascript:;" @click="onAd">
+      <RouterLink href="javascript:;" to="/member/address" >
         <span  class="iconfont icon-dw"></span>
         <p>地址管理</p>
-      </a>
+      </RouterLink>
     </div>
   </div>
   <div class="like-container">
-    <InfoEdit ref="onDis" ></InfoEdit>
+    <InfoEdit ></InfoEdit>
   </div>
 
 </template>
