@@ -17,15 +17,14 @@ const del = () => {
   addressStore.delAddress()
  }
 
-const open = ref() // 添加地址 弹窗
+// TODO-----------------------------------------------------------------点击调用子组件的方法
+const onOpen = ref() // 添加地址 弹窗
 const onAdd = () => {
-    open.value.open({})
+  onOpen.value.open({})
 }
 
-
-// 编辑地址
-const onEdit = (row) => {
-    open.value.open(row)
+const onEdit = (row) => { // 编辑地址
+  onOpen.value.open(row)
 }
 
 
@@ -34,7 +33,7 @@ const onEdit = (row) => {
 <template>
           <!-- 地址管理 -->
     <div>
-      <div>地址管理</div>
+      <div class="title">地址管理</div>
       <div class="header">
         <div class="addressWrapper">
           <div class="text item " 
@@ -58,13 +57,19 @@ const onEdit = (row) => {
         <div class="onAddress">
           <el-button  @click="onAdd">新增地址</el-button>
           <!-- 添加地址 -->
-          <checkoutAdd ref="open"  ></checkoutAdd>
+          <checkoutAdd ref="onOpen"  ></checkoutAdd>
         </div>
     </div>
     </div>
 </template>
 
 <style scoped lang="scss">
+  .title{
+        font-size: 20px;
+        font-weight: bold;
+        padding: 20px;
+        
+  }
     // 地址管理
     .header{
         display: flex;

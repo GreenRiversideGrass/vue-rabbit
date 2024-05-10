@@ -18,10 +18,6 @@ const checkInfo = checkindex.checkInfo
 const curAddress = checkindex.curAddress
 const toggleFlag = checkindex.toggleFlag // 切换地址弹窗
 
-// 地址渲染
-
-
-
 
 // 创建订单
 const createOrder = async () => {
@@ -49,12 +45,12 @@ const createOrder = async () => {
     cartStore.updateNewList()
 }
 
-const open = ref() // 添加地址 弹窗
+const onOpen = ref() // 添加地址 弹窗
 const addFlag = () => {
-  open.value.open()
+  onOpen.value.open()
 }
 
-// 添加地址成功后重新获取地址列表
+// 添加地址/修改地址成功后重新获取地址列表
 const onSuccess = () => { 
   checkindex.getCheckInfo()
 }
@@ -177,7 +173,7 @@ const onSuccess = () => {
     </template>
   </el-dialog>
   <!-- 添加地址 -->
-  <checkoutAdd ref="open" @success="onSuccess"></checkoutAdd>
+  <checkoutAdd ref="onOpen" @success="onSuccess"></checkoutAdd>
 
 </template>
 

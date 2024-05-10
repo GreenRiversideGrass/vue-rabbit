@@ -27,3 +27,5 @@ export const useCountDown = () => {
         fromatTime
     }
 }
+
+// 搭配 v-img-lazy=""  使用
