@@ -1,32 +1,30 @@
-<script setup >
+<script setup>
 import { getLikeListAPI } from "@/apis/user"
-import { ref ,onMounted} from "vue"
+import { ref, onMounted } from "vue"
 import GoodsItem from "@/views/Layout/Home/componets/Goodsitem.vue"
 
 const likeList = ref([])
 const getLikeList = async () => {
-  const res = await getLikeListAPI({limit: 4})
+  const res = await getLikeListAPI({ limit: 4 })
   likeList.value = res.result
 }
 
 onMounted(() => {
   getLikeList()
 })
-
 </script>
 <template>
-    <div class="home-panel" ref="onEdist" >
-      <div class="header">
-        <h4 data-v-bcb266e0="">猜你喜欢</h4>
-      </div>
-      <div class="goods-list">
-        <GoodsItem v-for="good in likeList" :key="good.id" :good="good" />
-      </div>
+  <div class="home-panel" ref="onEdist">
+    <div class="header">
+      <h4 data-v-bcb266e0="">猜你喜欢</h4>
     </div>
+    <div class="goods-list">
+      <GoodsItem v-for="good in likeList" :key="good.id" :good="good" />
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
-
 .home-panel {
   background-color: #fff;
   padding: 0 20px;
@@ -45,7 +43,6 @@ onMounted(() => {
       font-size: 22px;
       font-weight: 400;
     }
-
   }
 
   .goods-list {
@@ -53,7 +50,4 @@ onMounted(() => {
     justify-content: space-around;
   }
 }
-
-
-
 </style>

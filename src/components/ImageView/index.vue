@@ -1,15 +1,14 @@
 <script setup>
-import { ref,watch } from 'vue'
-import { useMouseInElement } from '@vueuse/core'
+import { ref, watch } from "vue"
+import { useMouseInElement } from "@vueuse/core"
 
 // props适配图片列表
 defineProps({
   imageList: {
     type: Array,
-    default: () => []
-  }
+    default: () => [],
+  },
 })
-
 
 // 1.小图切换大图显示
 const cativeIndex = ref(0)
@@ -27,25 +26,33 @@ const top = ref(0)
 
 const positionX = ref(0)
 const positionY = ref(0)
-watch([elementX, elementY],() => {
+watch([elementX, elementY], () => {
   // 如果鼠标没有移入盒子内  直接不执行后面的逻辑
-  if(isOutside.value) return
+  if (isOutside.value) return
   // 1.有效值范围控制滑块距离
   // 横向
-  if(elementX.value > 100 && elementX.value < 300){
+  if (elementX.value > 100 && elementX.value < 300) {
     left.value = elementX.value - 100
   }
   // 纵向
-  if(elementY.value > 100 && elementY.value < 300){
+  if (elementY.value > 100 && elementY.value < 300) {
     top.value = elementY.value - 100
   }
 
   // 2.处理边界问题
-  if(elementX.value > 300) {left.value = 200}
-  if(elementX.value < 100) {left.value = 0}
+  if (elementX.value > 300) {
+    left.value = 200
+  }
+  if (elementX.value < 100) {
+    left.value = 0
+  }
 
-  if(elementY.value > 300) {top.value = 200}
-  if(elementY.value < 100) {top.value = 0}
+  if (elementY.value > 300) {
+    top.value = 200
+  }
+  if (elementY.value < 100) {
+    top.value = 0
+  }
 
   // 3.控制大图的显示
   positionX.value = -left.value * 2
@@ -53,29 +60,41 @@ watch([elementX, elementY],() => {
 })
 </script>
 
-
 <template>
   <div class="goods-image">
     <!-- 左侧大图-->
     <div class="middle" ref="target">
       <img :src="imageList[cativeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" v-show="!isOutside" :style="{ left: `${left}px`, top: `${top}px` }"></div>
+      <div
+        class="layer"
+        v-show="!isOutside"
+        :style="{ left: `${left}px`, top: `${top}px` }"
+      ></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
-      <li v-for="(img, i) in imageList" :key="i" @mouseenter="enterhandler(i)" :class="{active: i === cativeIndex}">
+      <li
+        v-for="(img, i) in imageList"
+        :key="i"
+        @mouseenter="enterhandler(i)"
+        :class="{ active: i === cativeIndex }"
+      >
         <img :src="img" alt="" />
       </li>
     </ul>
     <!-- 放大镜大图 -->
-    <div class="large" :style="[
-      {
-        backgroundImage: `url(${imageList[cativeIndex]})`,
-        backgroundPositionX: `${positionX}px`,
-        backgroundPositionY: `${positionY}px`,
-      },
-    ]" v-show="!isOutside"></div>
+    <div
+      class="large"
+      :style="[
+        {
+          backgroundImage: `url(${imageList[cativeIndex]})`,
+          backgroundPositionX: `${positionX}px`,
+          backgroundPositionY: `${positionY}px`,
+        },
+      ]"
+      v-show="!isOutside"
+    ></div>
   </div>
 </template>
 
@@ -83,7 +102,7 @@ watch([elementX, elementY],() => {
 .goods-image {
   width: 480px;
   height: 400px;
-  position: relative; 
+  position: relative;
   display: flex;
 
   .middle {

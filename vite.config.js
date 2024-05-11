@@ -1,13 +1,12 @@
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath, URL } from "node:url"
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from "vite"
+import vue from "@vitejs/plugin-vue"
 
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import AutoImport from "unplugin-auto-import/vite"
+import Components from "unplugin-vue-components/vite"
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 // 导入对应包
-
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,14 +17,14 @@ export default defineConfig({
     }),
     Components({
       // 1.配置elementPlus采用sass样式配色系统
-      resolvers: [ElementPlusResolver({importStyle:"sass"})],
-    })
+      resolvers: [ElementPlusResolver({ importStyle: "sass" })],
+    }),
   ],
   resolve: {
     // 实际的路劲转换 @  -> src
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
   },
   css: {
     preprocessorOptions: {
@@ -35,7 +34,7 @@ export default defineConfig({
           @use "@/styles/element/index.scss" as *;
           @use "@/styles/var.scss" as *;
         `,
-      }
-    }
-  }
+      },
+    },
+  },
 })

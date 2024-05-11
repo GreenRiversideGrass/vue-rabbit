@@ -1,5 +1,5 @@
 <script setup>
-import { useCategoryStore } from '@/stores/categoryStore';
+import { useCategoryStore } from "@/stores/categoryStore"
 
 const categoryStore = useCategoryStore()
 </script>
@@ -9,7 +9,9 @@ const categoryStore = useCategoryStore()
     <ul class="menu">
       <li v-for="item in categoryStore.categoryLsit" :key="item">
         <RouterLink to="/">{{ item.name }}</RouterLink>
-        <RouterLink v-for="i in item.children.slice(0,2)" :key="i" to="/">{{i.name}}</RouterLink>
+        <RouterLink v-for="i in item.children.slice(0, 2)" :key="i" to="/">{{
+          i.name
+        }}</RouterLink>
         <!-- 弹层layer位置 -->
         <div class="layer">
           <h4>分类推荐 <small>根据您的购买或浏览记录推荐</small></h4>
@@ -19,10 +21,10 @@ const categoryStore = useCategoryStore()
                 <img :src="i.picture" alt="" />
                 <div class="info">
                   <p class="name ellipsis-2">
-                    {{i.name}}
+                    {{ i.name }}
                   </p>
-                  <p class="desc ellipsis">{{i.desc}}</p>
-                  <p class="price"><i>¥</i>{{i.price}}</p>
+                  <p class="desc ellipsis">{{ i.desc }}</p>
+                  <p class="price"><i>¥</i>{{ i.price }}</p>
                 </div>
               </RouterLink>
             </li>
@@ -33,8 +35,7 @@ const categoryStore = useCategoryStore()
   </div>
 </template>
 
-
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .home-category {
   width: 250px;
   height: 500px;

@@ -8,4 +8,4 @@ params: {
   pageSize:2
 }
 */
-export const getUserOrder = (params) => http.get('/member/order', {params})
+export const getUserOrder = (params) => http.get("/member/order", { params })

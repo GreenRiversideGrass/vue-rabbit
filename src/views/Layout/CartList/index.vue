@@ -1,12 +1,12 @@
 <script setup>
-import { userCartStore } from '@/stores/cartStore'
+import { userCartStore } from "@/stores/cartStore"
 const cartStore = userCartStore()
 
 // 单选
-const singleCheck = (i,selected) => {
+const singleCheck = (i, selected) => {
   // store cartList 数组 无法知道要修改谁的选中状态
   // 除了 selected 之外，还需要传递一个 skuId 用来筛选
-  cartStore.singleSelect(i.skuId,selected)
+  cartStore.singleSelect(i.skuId, selected)
 }
 
 // 全选
@@ -23,7 +23,10 @@ const allCheck = (selected) => {
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox :model-value="cartStore.isALL" @change="allCheck"/>
+                <el-checkbox
+                  :model-value="cartStore.isALL"
+                  @change="allCheck"
+                />
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
@@ -37,11 +40,16 @@ const allCheck = (selected) => {
             <tr v-for="i in cartStore.cartList" :key="i.id">
               <td>
                 <!-- 单选框 -->
-                <el-checkbox :model-value="i.selected" @change="(selected)=>singleCheck(i,selected)"/>
+                <el-checkbox
+                  :model-value="i.selected"
+                  @change="(selected) => singleCheck(i, selected)"
+                />
               </td>
               <td>
                 <div class="goods">
-                  <RouterLink to="/"><img :src="i.picture" alt="" /></RouterLink>
+                  <RouterLink to="/"
+                    ><img :src="i.picture" alt=""
+                  /></RouterLink>
                   <div>
                     <p class="name ellipsis">
                       {{ i.name }}
@@ -60,7 +68,12 @@ const allCheck = (selected) => {
               </td>
               <td class="tc">
                 <p>
-                  <el-popconfirm title="确认删除吗?" confirm-button-text="确认" cancel-button-text="取消" @confirm="delCart(i)">
+                  <el-popconfirm
+                    title="确认删除吗?"
+                    confirm-button-text="确认"
+                    cancel-button-text="取消"
+                    @confirm="delCart(i)"
+                  >
                     <template #reference>
                       <a href="javascript:;">删除</a>
                     </template>
@@ -78,17 +91,22 @@ const allCheck = (selected) => {
               </td>
             </tr>
           </tbody>
-
         </table>
       </div>
       <!-- 操作栏 -->
       <div class="action">
         <div class="batch">
-          共 {{ cartStore.allCount }} 件商品，已选择 {{ cartStore.selectedCount }} 件，商品合计：
-          <span class="red">¥ {{cartStore.selectedPrice.toFixed(2)}} </span>
+          共 {{ cartStore.allCount }} 件商品，已选择
+          {{ cartStore.selectedCount }} 件，商品合计：
+          <span class="red">¥ {{ cartStore.selectedPrice.toFixed(2) }} </span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary" @click="$router.push('/checkout')">下单结算</el-button>
+          <el-button
+            size="large"
+            type="primary"
+            @click="$router.push('/checkout')"
+            >下单结算</el-button
+          >
         </div>
       </div>
     </div>
@@ -173,7 +191,7 @@ const allCheck = (selected) => {
       height: 100px;
     }
 
-    >div {
+    > div {
       width: 280px;
       font-size: 16px;
       padding-left: 10px;
@@ -218,6 +236,5 @@ const allCheck = (selected) => {
     font-weight: normal;
     line-height: 50px;
   }
-
 }
 </style>

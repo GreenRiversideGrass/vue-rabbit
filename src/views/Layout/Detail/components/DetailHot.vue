@@ -1,22 +1,22 @@
 <script setup>
-import { getHotGoodsAPI } from '@/apis/detail'
-import { ref, onMounted ,computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { getHotGoodsAPI } from "@/apis/detail"
+import { ref, onMounted, computed } from "vue"
+import { useRoute } from "vue-router"
 
 // 谁props参数 适配不同的title和数据
 const props = defineProps({
   hotType: {
-    type: Number
-  }
+    type: Number,
+  },
 })
 
-//  适配title 1 - 24小时热榜 2 - 周热榜 
+//  适配title 1 - 24小时热榜 2 - 周热榜
 const TITLEMAP = {
-  1: '24小时热榜',
-  2: '周热榜'
+  1: "24小时热榜",
+  2: "周热榜",
 }
 
-const title = computed(() =>  TITLEMAP[props.hotType] )
+const title = computed(() => TITLEMAP[props.hotType])
 
 // 以24小时热榜获取数渲染模板
 // 1.封装接口
@@ -26,7 +26,7 @@ const route = useRoute()
 const getHotGoods = async () => {
   const res = await getHotGoodsAPI({
     id: route.params.id,
-    type: props.hotType
+    type: props.hotType,
   })
   hotList.value = res.result
 }
@@ -35,20 +35,23 @@ onMounted(() => {
 })
 </script>
 
-
 <template>
   <div class="goods-hot">
-    <h3>{{title}}</h3>
+    <h3>{{ title }}</h3>
     <!-- 商品区块 -->
-    <RouterLink :to="`/detail/${item.id}`" class="goods-item" v-for="item in hotList" :key="item.id">
+    <RouterLink
+      :to="`/detail/${item.id}`"
+      class="goods-item"
+      v-for="item in hotList"
+      :key="item.id"
+    >
       <img :src="item.picture" alt="" />
-      <p class="name ellipsis">{{item.name}}</p>
-      <p class="desc ellipsis">{{item.desc}}</p>
-      <p class="price">&yen;{{item.price}}</p>
+      <p class="name ellipsis">{{ item.name }}</p>
+      <p class="desc ellipsis">{{ item.desc }}</p>
+      <p class="price">&yen;{{ item.price }}</p>
     </RouterLink>
   </div>
 </template>
-
 
 <style scoped lang="scss">
 .goods-hot {

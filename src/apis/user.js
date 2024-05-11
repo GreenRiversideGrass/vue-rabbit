@@ -2,9 +2,11 @@
 import http from "@/utils/http"
 
 // 登录
-export const LoginPAI = ({account,password}) => http.post('/login',{
+export const LoginPAI = ({ account, password }) =>
+  http.post("/login", {
     account,
-    password
-})
+    password,
+  })
 
-export const getLikeListAPI = ({ limit = 4 }) => http.get('/goods/relevant',{params:{limit}})
+export const getLikeListAPI = ({ limit = 4 }) =>
+  http.get("/goods/relevant", { params: { limit } })

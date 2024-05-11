@@ -1,12 +1,8 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-    <!-- 一级路由出口 -->
-    <router-view></router-view>
+  <!-- 一级路由出口 -->
+  <router-view></router-view>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

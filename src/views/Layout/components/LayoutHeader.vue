@@ -1,13 +1,13 @@
 <script setup>
-import { useCategoryStore } from '@/stores/categoryStore'
-import HeaderCart from './HeaderCart.vue'
+import { useCategoryStore } from "@/stores/categoryStore"
+import HeaderCart from "./HeaderCart.vue"
 
 // 使用pinia中的数据
 const categoryStore = useCategoryStore()
 </script>
 
 <template>
-  <header class='app-header'>
+  <header class="app-header">
     <div class="container">
       <h1 class="logo">
         <RouterLink to="/">小兔鲜</RouterLink>
@@ -16,13 +16,19 @@ const categoryStore = useCategoryStore()
         <li>
           <router-link to="/">首页</router-link>
         </li>
-        <li class="home" v-for="item in categoryStore.categoryLsit" :key="item.id" >
-          <RouterLink active-class="active" :to="`/category/${item.id}`">{{item.name}}</RouterLink>
+        <li
+          class="home"
+          v-for="item in categoryStore.categoryLsit"
+          :key="item.id"
+        >
+          <RouterLink active-class="active" :to="`/category/${item.id}`">{{
+            item.name
+          }}</RouterLink>
         </li>
       </ul>
       <div class="search">
         <i class="iconfont icon-search"></i>
-        <input type="text" placeholder="搜一搜">
+        <input type="text" placeholder="搜一搜" />
       </div>
       <!-- 头部购物车 -->
       <HeaderCart></HeaderCart>
@@ -30,8 +36,7 @@ const categoryStore = useCategoryStore()
   </header>
 </template>
 
-
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .app-header {
   background: #fff;
 
@@ -48,7 +53,8 @@ const categoryStore = useCategoryStore()
       height: 132px;
       width: 100%;
       text-indent: -9999px;
-      background: url('@/assets/images/logo.png') no-repeat center 18px / contain;
+      background: url("@/assets/images/logo.png") no-repeat center 18px /
+        contain;
     }
   }
 
@@ -58,24 +64,24 @@ const categoryStore = useCategoryStore()
     padding-left: 40px;
     position: relative;
     z-index: 998;
-  
+
     li {
       margin-right: 40px;
       width: 38px;
       text-align: center;
-  
+
       a {
         font-size: 16px;
         line-height: 32px;
         height: 32px;
         display: inline-block;
-  
+
         &:hover {
           color: $xtxColor;
           border-bottom: 1px solid $xtxColor;
         }
       }
-  
+
       .active {
         color: $xtxColor;
         border-bottom: 1px solid $xtxColor;

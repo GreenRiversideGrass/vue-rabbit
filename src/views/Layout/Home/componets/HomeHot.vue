@@ -1,7 +1,7 @@
 <script setup>
-import HomePanel from './HomePanel.vue'
-import { getHotGoodsAPI } from '@/apis/home'
-import { ref } from 'vue'
+import HomePanel from "./HomePanel.vue"
+import { getHotGoodsAPI } from "@/apis/home"
+import { ref } from "vue"
 // 获取人气推荐数据
 const hotList = ref([])
 
@@ -10,26 +10,25 @@ const getHotList = async () => {
   hotList.value = res.result
 }
 
-  getHotList()
-
+getHotList()
 </script>
 
 <template>
   <HomePanel title="人气推荐" sub-title="人气爆款 不容错过">
-      <ul class="goods-list">
-        <li v-for="item in hotList" :key="item.id">
-          <RouterLink to="/">
-            <!-- v-img-lazy="item.picture" 图片配合指令 懒加载的操作 -->
-            <img v-img-lazy="item.picture" alt="">
-            <p class="name">{{ item.title }}</p>
-            <p class="desc">{{ item.alt }}</p>
-          </RouterLink>
-        </li>
-      </ul>
+    <ul class="goods-list">
+      <li v-for="item in hotList" :key="item.id">
+        <RouterLink to="/">
+          <!-- v-img-lazy="item.picture" 图片配合指令 懒加载的操作 -->
+          <img v-img-lazy="item.picture" alt="" />
+          <p class="name">{{ item.title }}</p>
+          <p class="desc">{{ item.alt }}</p>
+        </RouterLink>
+      </li>
+    </ul>
   </HomePanel>
 </template>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .goods-list {
   display: flex;
   justify-content: space-between;
@@ -38,7 +37,7 @@ const getHotList = async () => {
   li {
     width: 306px;
     height: 406px;
-    transition: all .5s;
+    transition: all 0.5s;
 
     &:hover {
       transform: translate3d(0, -3px, 0);

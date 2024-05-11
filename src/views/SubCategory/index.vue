@@ -1,8 +1,8 @@
 <script setup>
-import {  getCategoryFilterAPI ,getSubCategoryAPI } from '@/apis/category'
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import Goodsitem from '../Layout/Home/componets/Goodsitem.vue'
+import { getCategoryFilterAPI, getSubCategoryAPI } from "@/apis/category"
+import { ref, onMounted } from "vue"
+import { useRoute } from "vue-router"
+import Goodsitem from "../Layout/Home/componets/Goodsitem.vue"
 
 const route = useRoute()
 // 获取面包屑导航数据
@@ -21,7 +21,7 @@ const reqData = ref({
   categoryId: route.params.id,
   page: 1,
   pageSize: 20,
-  sortField: 'publishTime',
+  sortField: "publishTime",
 })
 const getGoodsList = async () => {
   const res = await getSubCategoryAPI(reqData.value)
@@ -49,14 +49,15 @@ const load = async () => {
 </script>
 
 <template>
-  <div class="container ">
+  <div class="container">
     <!-- 面包屑 -->
     <div class="bread-container">
       <el-breadcrumb separator=">">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: `/category/${filterData.parentId}` }">{{filterData.parentName}}
+        <el-breadcrumb-item :to="{ path: `/category/${filterData.parentId}` }"
+          >{{ filterData.parentName }}
         </el-breadcrumb-item>
-        <el-breadcrumb-item>{{filterData.name}}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ filterData.name }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="sub-container">
@@ -65,16 +66,21 @@ const load = async () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
-         <!-- 商品列表-->
-         <Goodsitem v-for="good in goodList" :good="good" :key="good.id"></Goodsitem>
+      <div
+        class="body"
+        v-infinite-scroll="load"
+        :infinite-scroll-disabled="disabled"
+      >
+        <!-- 商品列表-->
+        <Goodsitem
+          v-for="good in goodList"
+          :good="good"
+          :key="good.id"
+        ></Goodsitem>
       </div>
     </div>
   </div>
-
 </template>
-
-
 
 <style lang="scss" scoped>
 .bread-container {
@@ -128,7 +134,5 @@ const load = async () => {
     display: flex;
     justify-content: center;
   }
-
-
 }
 </style>

@@ -1,10 +1,10 @@
 <script setup>
-import { useCheckoutIndex } from './composables/CheckoutIndex.js'
-import { createOrderAPI } from '@/apis/checkout'
-import {ref,onMounted} from 'vue'
-import { useRouter } from 'vue-router'
-import { userCartStore } from '@/stores/cartStore'
-import checkoutAdd from './components/CheckoutAdd.vue'
+import { useCheckoutIndex } from "./composables/CheckoutIndex.js"
+import { createOrderAPI } from "@/apis/checkout"
+import { ref, onMounted } from "vue"
+import { useRouter } from "vue-router"
+import { userCartStore } from "@/stores/cartStore"
+import checkoutAdd from "./components/CheckoutAdd.vue"
 
 onMounted(() => {
   checkindex.getCheckInfo()
@@ -18,31 +18,30 @@ const checkInfo = checkindex.checkInfo
 const curAddress = checkindex.curAddress
 const toggleFlag = checkindex.toggleFlag // 切换地址弹窗
 
-
 // 创建订单
 const createOrder = async () => {
   const res = await createOrderAPI({
     deliveryTimeType: 1,
     payType: 1,
     payChannel: 1,
-    buyerMessage: '',
-    goods:checkInfo.value.goods.map(item => {
+    buyerMessage: "",
+    goods: checkInfo.value.goods.map((item) => {
       return {
         skuId: item.skuId,
-        count: item.count
+        count: item.count,
       }
     }),
-    addressId:curAddress.value.id
+    addressId: curAddress.value.id,
   })
-    // 跳转到支付页面
-    router.push({
-      path: '/pay',
-      query: {
-        id: res.result.id
-      }
-    })
-    // 更新购物车
-    cartStore.updateNewList()
+  // 跳转到支付页面
+  router.push({
+    path: "/pay",
+    query: {
+      id: res.result.id,
+    },
+  })
+  // 更新购物车
+  cartStore.updateNewList()
 }
 
 const onOpen = ref() // 添加地址 弹窗
@@ -51,7 +50,7 @@ const addFlag = () => {
 }
 
 // 添加地址/修改地址成功后重新获取地址列表
-const onSuccess = () => { 
+const onSuccess = () => {
   checkindex.getCheckInfo()
 }
 </script>
@@ -65,16 +64,25 @@ const onSuccess = () => {
         <div class="box-body">
           <div class="address">
             <div class="text">
-              <div class="none" v-if="!curAddress">您需要先添加收货地址才可提交订单。</div>
+              <div class="none" v-if="!curAddress">
+                您需要先添加收货地址才可提交订单。
+              </div>
               <ul v-else>
-                <li><span>收<i />货<i />人：</span>{{ curAddress.receiver }}</li>
+                <li>
+                  <span>收<i />货<i />人：</span>{{ curAddress.receiver }}
+                </li>
                 <li><span>联系方式：</span>{{ curAddress.contact }}</li>
-                <li><span>收货地址：</span>{{ curAddress.fullLocation }} {{ curAddress.address }}</li>
+                <li>
+                  <span>收货地址：</span>{{ curAddress.fullLocation }}
+                  {{ curAddress.address }}
+                </li>
               </ul>
             </div>
             <div class="action">
-              <el-button size="large" @click="toggleFlag = true">切换地址</el-button>
-              <el-button size="large"  @click="addFlag">添加地址</el-button>
+              <el-button size="large" @click="toggleFlag = true"
+                >切换地址</el-button
+              >
+              <el-button size="large" @click="addFlag">添加地址</el-button>
             </div>
           </div>
         </div>
@@ -95,7 +103,7 @@ const onSuccess = () => {
               <tr v-for="i in checkInfo.goods" :key="i.id">
                 <td>
                   <a href="javascript:;" class="info">
-                    <img :src="i.picture" alt="">
+                    <img :src="i.picture" alt="" />
                     <div class="right">
                       <p>{{ i.name }}</p>
                       <p>{{ i.attrsText }}</p>
@@ -113,7 +121,9 @@ const onSuccess = () => {
         <!-- 配送时间 -->
         <h3 class="box-title">配送时间</h3>
         <div class="box-body">
-          <a class="my-btn active" href="javascript:;">不限送货时间：周一至周日</a>
+          <a class="my-btn active" href="javascript:;"
+            >不限送货时间：周一至周日</a
+          >
           <a class="my-btn" href="javascript:;">工作日送货：周一至周五</a>
           <a class="my-btn" href="javascript:;">双休日、假日送货：周六至周日</a>
         </div>
@@ -122,7 +132,7 @@ const onSuccess = () => {
         <div class="box-body">
           <a class="my-btn active" href="javascript:;">在线支付</a>
           <a class="my-btn" href="javascript:;">货到付款</a>
-          <span style="color:#999">货到付款需付5元手续费</span>
+          <span style="color: #999">货到付款需付5元手续费</span>
         </div>
         <!-- 金额明细 -->
         <h3 class="box-title">金额明细</h3>
@@ -142,13 +152,17 @@ const onSuccess = () => {
             </dl>
             <dl>
               <dt>应付总额：</dt>
-              <dd class="price">{{ checkInfo.summary?.totalPayPrice.toFixed(2) }}</dd>
+              <dd class="price">
+                {{ checkInfo.summary?.totalPayPrice.toFixed(2) }}
+              </dd>
             </dl>
           </div>
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large" @click="createOrder" >提交订单</el-button>
+          <el-button type="primary" size="large" @click="createOrder"
+            >提交订单</el-button
+          >
         </div>
       </div>
     </div>
@@ -156,11 +170,19 @@ const onSuccess = () => {
   <!-- 切换地址 -->
   <el-dialog v-model="toggleFlag" title="切换收货地址" width="30%" center>
     <div class="addressWrapper">
-      <div class="text item" :class="{active: checkindex.activeAddress.id === item.id}" @click="checkindex.switchAddress(item)" v-for="item in checkInfo.userAddresses"  :key="item.id">
+      <div
+        class="text item"
+        :class="{ active: checkindex.activeAddress.id === item.id }"
+        @click="checkindex.switchAddress(item)"
+        v-for="item in checkInfo.userAddresses"
+        :key="item.id"
+      >
         <ul>
-        <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
-        <li><span>联系方式：</span>{{ item.contact }}</li>
-        <li><span>收货地址：</span>{{ item.fullLocation + item.address }}</li>
+          <li>
+            <span>收<i />货<i />人：</span>{{ item.receiver }}
+          </li>
+          <li><span>联系方式：</span>{{ item.contact }}</li>
+          <li><span>收货地址：</span>{{ item.fullLocation + item.address }}</li>
         </ul>
       </div>
     </div>
@@ -174,7 +196,6 @@ const onSuccess = () => {
   </el-dialog>
   <!-- 添加地址 -->
   <checkoutAdd ref="onOpen" @success="onSuccess"></checkoutAdd>
-
 </template>
 
 <style scoped lang="scss">
@@ -217,7 +238,7 @@ const onSuccess = () => {
       width: 100%;
     }
 
-    >ul {
+    > ul {
       flex: 1;
       padding: 20px;
 
@@ -228,7 +249,7 @@ const onSuccess = () => {
           color: #999;
           margin-right: 5px;
 
-          >i {
+          > i {
             width: 0.5em;
             display: inline-block;
           }
@@ -236,7 +257,7 @@ const onSuccess = () => {
       }
     }
 
-    >a {
+    > a {
       color: $xtxColor;
       width: 160px;
       text-align: center;
@@ -382,12 +403,11 @@ const onSuccess = () => {
       background: lighten($xtxColor, 50%);
     }
 
-    >ul {
+    > ul {
       padding: 10px;
       font-size: 14px;
       line-height: 30px;
     }
   }
 }
-
 </style>

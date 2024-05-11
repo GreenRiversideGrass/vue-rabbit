@@ -1,22 +1,24 @@
 <script setup>
-import LayoutNav from './components/LayoutNav.vue'
-import LayoutHeader from './components/LayoutHeader.vue'
-import LayoutFooter from './components/LayoutFooter.vue'
-import LayoutFixed from './components/LayoutFixed.vue'
+import LayoutNav from "./components/LayoutNav.vue"
+import LayoutHeader from "./components/LayoutHeader.vue"
+import LayoutFooter from "./components/LayoutFooter.vue"
+import LayoutFixed from "./components/LayoutFixed.vue"
 
 // 触发获取导航列表的 action
-import { useCategoryStore } from '@/stores/categoryStore'
-import {onMounted} from 'vue'
+import { useCategoryStore } from "@/stores/categoryStore"
+import { onMounted } from "vue"
 
 const categoryStore = useCategoryStore()
 
-onMounted(() => {categoryStore.getCategory()})
+onMounted(() => {
+  categoryStore.getCategory()
+})
 </script>
 <template>
-    <LayoutFixed />
-    <LayoutNav />
-    <LayoutHeader />
-    <!-- 添加key 破环复用机制 强制销毁重建  :key="$route.fullPath"-->
-    <RouterView />
-    <LayoutFooter />
+  <LayoutFixed />
+  <LayoutNav />
+  <LayoutHeader />
+  <!-- 添加key 破环复用机制 强制销毁重建  :key="$route.fullPath"-->
+  <RouterView />
+  <LayoutFooter />
 </template>

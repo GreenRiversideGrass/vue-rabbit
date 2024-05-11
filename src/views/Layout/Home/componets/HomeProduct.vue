@@ -1,8 +1,8 @@
 <script setup>
-import HomePanel from './HomePanel.vue'
-import { getGoodsAPI } from '@/apis/home'
-import { ref ,onMounted} from 'vue'
-import Goodsitem from './Goodsitem.vue'
+import HomePanel from "./HomePanel.vue"
+import { getGoodsAPI } from "@/apis/home"
+import { ref, onMounted } from "vue"
+import Goodsitem from "./Goodsitem.vue"
 
 // 商品数据
 const goodsProduct = ref([])
@@ -23,7 +23,7 @@ onMounted(() => {
       <div class="box">
         <RouterLink class="cover" to="/">
           <!-- v-img-lazy="cate.picture" -->
-          <img v-img-lazy="cate.picture"  />
+          <img v-img-lazy="cate.picture" />
           <strong class="label">
             <span>{{ cate.name }}馆</span>
             <span>{{ cate.saleInfo }}</span>
@@ -39,7 +39,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .home-product {
   background: #fff;
   margin-top: 20px;
@@ -125,8 +125,6 @@ onMounted(() => {
         }
       }
     }
-
-
   }
 }
 </style>

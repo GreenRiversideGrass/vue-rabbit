@@ -1,10 +1,10 @@
 <script setup>
-import DetailHot from './components/DetailHot.vue'
-import {getDetail} from '@/apis/detail'
-import {useRoute} from 'vue-router'
-import {ref, onMounted} from 'vue'
-import { ElMessage } from 'element-plus'
-import { userCartStore } from '@/stores/cartStore'
+import DetailHot from "./components/DetailHot.vue"
+import { getDetail } from "@/apis/detail"
+import { useRoute } from "vue-router"
+import { ref, onMounted } from "vue"
+import { ElMessage } from "element-plus"
+import { userCartStore } from "@/stores/cartStore"
 
 const goods = ref({})
 const route = useRoute()
@@ -33,21 +33,21 @@ const handleChange = (count) => {
 // 添加购物车
 const cartStore = userCartStore()
 const addCart = () => {
-  if(skuObj){
+  if (skuObj) {
     // 规格已选择 触发action
     cartStore.addCart({
-      id:goods.value.id,
-      name:goods.value.name,
-      picture:goods.value.mainPictures[0],
-      price:goods.value.price,
-      count:count.value,
-      skuId:skuObj.skuId,
-      attrsText:skuObj.specsText,
-      selected:true
+      id: goods.value.id,
+      name: goods.value.name,
+      picture: goods.value.mainPictures[0],
+      price: goods.value.price,
+      count: count.value,
+      skuId: skuObj.skuId,
+      attrsText: skuObj.specsText,
+      selected: true,
     })
-  }else{
+  } else {
     // 规格没有选择 提示用户
-    ElMessage.warning('请选择规格')
+    ElMessage.warning("请选择规格")
   }
 }
 </script>
@@ -58,14 +58,18 @@ const addCart = () => {
       <div class="bread-container" v-if="goods.details">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-           <!-- 
+          <!-- 
             错误原因：goods一开始{} {}.categories -> undefunded -> undefunded[1]
             1.可选链操作符 ?. 用于判断左侧的操作数是否为null或undefined，如果是则返回undefined，否则返回右侧的操作数
             2. v-if="goods.categories" 用于判断goods.categories是否存在，如果存在则渲染
             -->
-          <el-breadcrumb-item :to="{ path: `/category/${goods.categories[1].id}` }">{{goods.categories[1].name}}
+          <el-breadcrumb-item
+            :to="{ path: `/category/${goods.categories[1].id}` }"
+            >{{ goods.categories[1].name }}
           </el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: `/category/sub/${goods.categories[0].id}` }">{{goods.categories[0].name}}
+          <el-breadcrumb-item
+            :to="{ path: `/category/sub/${goods.categories[0].id}` }"
+            >{{ goods.categories[0].name }}
           </el-breadcrumb-item>
           <el-breadcrumb-item>抓绒保暖，毛毛虫子儿童运动鞋</el-breadcrumb-item>
         </el-breadcrumb>
@@ -81,12 +85,12 @@ const addCart = () => {
               <ul class="goods-sales">
                 <li>
                   <p>销量人气</p>
-                  <p> {{goods.salesCount}}+ </p>
+                  <p>{{ goods.salesCount }}+</p>
                   <p><i class="iconfont icon-task-filling"></i>销量人气</p>
                 </li>
                 <li>
                   <p>商品评价</p>
-                  <p>{{goods.commentCount}}+</p>
+                  <p>{{ goods.commentCount }}+</p>
                   <p><i class="iconfont icon-comment-filling"></i>查看评价</p>
                 </li>
                 <li>
@@ -103,11 +107,11 @@ const addCart = () => {
             </div>
             <div class="spec">
               <!-- 商品信息区 -->
-              <p class="g-name"> {{goods.name}} </p>
-              <p class="g-desc">{{goods.desc}} </p>
+              <p class="g-name">{{ goods.name }}</p>
+              <p class="g-desc">{{ goods.desc }}</p>
               <p class="g-price">
-                <span>{{goods.oldPrice}}</span>
-                <span> {{goods.price}}</span>
+                <span>{{ goods.oldPrice }}</span>
+                <span> {{ goods.price }}</span>
               </p>
               <div class="g-service">
                 <dl>
@@ -127,14 +131,16 @@ const addCart = () => {
               <!-- sku组件 -->
               <XtxSku :goods="goods" @change="skuChange"></XtxSku>
               <!-- 数据组件 -->
-              <el-input-number v-model="count" @change="handleChange"></el-input-number>
+              <el-input-number
+                v-model="count"
+                @change="handleChange"
+              ></el-input-number>
               <!-- 按钮组件 -->
               <div>
                 <el-button size="large" class="btn" @click="addCart">
                   加入购物车
                 </el-button>
               </div>
-
             </div>
           </div>
           <div class="goods-footer">
@@ -147,13 +153,21 @@ const addCart = () => {
                 <div class="goods-detail" v-if="goods.details">
                   <!-- 属性 -->
                   <ul class="attrs">
-                    <li v-for="item in goods.details.properties" :key="item.value">
-                      <span class="dt">{{item.name}}</span>
-                      <span class="dd">{{item.value}}</span>
+                    <li
+                      v-for="item in goods.details.properties"
+                      :key="item.value"
+                    >
+                      <span class="dt">{{ item.name }}</span>
+                      <span class="dd">{{ item.value }}</span>
                     </li>
                   </ul>
                   <!-- 图片 -->
-                  <img v-for="img in goods.details.pictures" :src="img" :key="img" alt="">
+                  <img
+                    v-for="img in goods.details.pictures"
+                    :src="img"
+                    :key="img"
+                    alt=""
+                  />
                 </div>
               </div>
             </div>
@@ -171,8 +185,7 @@ const addCart = () => {
   </div>
 </template>
 
-
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .xtx-goods-page {
   .goods-info {
     min-height: 600px;
@@ -309,7 +322,7 @@ const addCart = () => {
       flex: 1;
       position: relative;
 
-      ~li::after {
+      ~ li::after {
         position: absolute;
         top: 10px;
         left: 0;
@@ -363,7 +376,7 @@ const addCart = () => {
       font-size: 18px;
       position: relative;
 
-      >span {
+      > span {
         color: $priceColor;
         font-size: 16px;
         margin-left: 10px;
@@ -397,14 +410,13 @@ const addCart = () => {
     }
   }
 
-  >img {
+  > img {
     width: 100%;
   }
 }
 
 .btn {
   margin-top: 20px;
-
 }
 
 .bread-container {

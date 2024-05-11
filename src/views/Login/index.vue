@@ -1,65 +1,65 @@
 <script setup>
-import { ElMessage } from 'element-plus'
-import 'element-plus/theme-chalk/el-message.css'
-import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/userStore'
+import { ElMessage } from "element-plus"
+import "element-plus/theme-chalk/el-message.css"
+import { useRouter } from "vue-router"
+import { useUserStore } from "@/stores/userStore"
 
 const userStore = useUserStore()
 // 表单验证 （账户+密码）
 
-import { ref } from 'vue'
+import { ref } from "vue"
 
 // 1.准备表单对象
 const form = ref({
-  account: '',
-  password: '',
-  agree: true
+  account: "",
+  password: "",
+  agree: true,
 })
 // 2.表单验证规则
 const rules = ref({
   account: [
-    { required: true, message: '用户名不能为空', trigger: 'blur' },
+    { required: true, message: "用户名不能为空", trigger: "blur" },
     {
       pattern: /^\S{5,15}$/,
-      message: '用户名必须是 5-15位 非空字符',
-    }
+      message: "用户名必须是 5-15位 非空字符",
+    },
   ],
   password: [
-    { required: true, message: '密码不能为空', trigger: 'blur' },
+    { required: true, message: "密码不能为空", trigger: "blur" },
     {
       pattern: /^\S{5,14}$/,
-      message: '密码必须是 6-14位 非空字符',
-    }
+      message: "密码必须是 6-14位 非空字符",
+    },
   ],
-  agree:[
-    {   
-      validator: (rule, value, callback) => {
+  agree: [
+    {
+      validator: ( value, callback) => {
         if (!value) {
-          callback(new Error('请勾选隐私条款和服务条款'))
+          callback(new Error("请勾选隐私条款和服务条款"))
         } else {
           callback()
         }
-      }
-    }
-  ]
+      },
+    },
+  ],
 })
 
 // 3.获取form实例统一校验
 const formRef = ref(null)
 const router = useRouter()
 const doLogin = () => {
-  const { account , password } = form.value
+  const { account, password } = form.value
   // 调用实例方法
   formRef.value.validate(async (valid) => {
     // valid：校验是否通过 true 通过 false 不通过
     // 以valid作为判断条件，如果通过校验才执行登录逻辑
     if (valid) {
       // TODO LOGIN
-     userStore.getUserInfo({ account, password })
-    //  1.提示用户登录成功
-    ElMessage.success('登录成功')
-    // 2.跳转到首页
-    router.replace('/')
+      userStore.getUserInfo({ account, password })
+      //  1.提示用户登录成功
+      ElMessage.success("登录成功")
+      // 2.跳转到首页
+      router.replace("/")
     }
   })
 }
@@ -67,9 +67,7 @@ const doLogin = () => {
 // 1.用户名和密码 只需要通过简单的配置
 // 2.同意条款需要自定义校验规则 validator:(role, value, callback)=>{}
 // 3.点击登录按钮，调用formRef实例方法 validate -> true  value传入回调函数
-
 </script>
-
 
 <template>
   <div>
@@ -92,20 +90,28 @@ const doLogin = () => {
         </nav>
         <div class="account-box">
           <div class="form">
-            <el-form ref="formRef" :model="form" :rules="rules" label-position="right" label-width="60px"
-              status-icon>
-              <el-form-item prop="account"  label="账户">
-                <el-input v-model="form.account"/>
+            <el-form
+              ref="formRef"
+              :model="form"
+              :rules="rules"
+              label-position="right"
+              label-width="60px"
+              status-icon
+            >
+              <el-form-item prop="account" label="账户">
+                <el-input v-model="form.account" />
               </el-form-item>
               <el-form-item prop="password" label="密码">
-                <el-input v-model="form.password"/>
+                <el-input v-model="form.password" />
               </el-form-item>
               <el-form-item label-width="22px" prop="agree">
-                <el-checkbox  size="large" v-model="form.agree">
+                <el-checkbox size="large" v-model="form.agree">
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn" @click="doLogin">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="doLogin"
+                >点击登录</el-button
+              >
             </el-form>
           </div>
         </div>
@@ -129,7 +135,7 @@ const doLogin = () => {
   </div>
 </template>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .login-header {
   background: #fff;
   border-bottom: 1px solid #e4e4e4;
@@ -148,7 +154,8 @@ const doLogin = () => {
       height: 132px;
       width: 100%;
       text-indent: -9999px;
-      background: url("@/assets/images/logo.png") no-repeat center 18px / contain;
+      background: url("@/assets/images/logo.png") no-repeat center 18px /
+        contain;
     }
   }
 
@@ -175,7 +182,7 @@ const doLogin = () => {
 }
 
 .login-section {
-  background: url('@/assets/images/login-bg.png') no-repeat center / cover;
+  background: url("@/assets/images/login-bg.png") no-repeat center / cover;
   height: 488px;
   position: relative;
 
@@ -225,7 +232,7 @@ const doLogin = () => {
       color: #999;
       display: inline-block;
 
-      ~a {
+      ~ a {
         border-left: 1px solid #ccc;
       }
     }
@@ -256,7 +263,7 @@ const doLogin = () => {
         position: relative;
         height: 36px;
 
-        >i {
+        > i {
           width: 34px;
           height: 34px;
           background: #cfcdcd;
@@ -301,7 +308,7 @@ const doLogin = () => {
         }
       }
 
-      >.error {
+      > .error {
         position: absolute;
         font-size: 12px;
         line-height: 28px;

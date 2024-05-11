@@ -1,9 +1,8 @@
 <script setup>
 import { useUserStore } from "@/stores/userStore"
-import InfoEdit from './InfoEdit/index.vue'
+import InfoEdit from "./InfoEdit/index.vue"
 
 const userStore = useUserStore()
-
 </script>
 
 <template>
@@ -24,16 +23,15 @@ const userStore = useUserStore()
         <span class="iconfont icon-aq"></span>
         <p>安全设置</p>
       </a>
-      <RouterLink href="javascript:;" to="/member/address" >
-        <span  class="iconfont icon-dw"></span>
+      <RouterLink href="javascript:;" to="/member/address">
+        <span class="iconfont icon-dw"></span>
         <p>地址管理</p>
       </RouterLink>
     </div>
   </div>
   <div class="like-container">
-    <InfoEdit ></InfoEdit>
+    <InfoEdit></InfoEdit>
   </div>
-
 </template>
 
 <style scoped lang="scss">
@@ -99,7 +97,4 @@ const userStore = useUserStore()
   border-radius: 4px;
   background-color: #fff;
 }
-
-
-
 </style>
